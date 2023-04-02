@@ -2,27 +2,63 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "remove",
-            "type": "shell",
-            "command": "rm -rf ${fileBasenameNoExtension}.o ${fileBasenameNoExtension}"
+            "label": "remove-build",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "${fileBasenameNoExtension}.o",
+                "${fileBasenameNoExtension}.exe"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "close": true,
+                "clear": true
+            }
         },
         {
-            "label": "nasm",
-            "type": "shell",
-            "command": "nasm -f elf64 -o ${fileBasenameNoExtension}.o ${fileBasename}"
-            "dependsOn": ["remove"]
-        }, 
-        {
-            "label": "link",
-            "type": "shell",
-            "command": "ld ${fileBasenameNoExtension}.o -o ${fileBasenameNoExtension}.exe"
-            "dependsOn": ["nasm"]
+            "label": "build-ASMwithCPP",
+            "command": "nasm",
+            "args": [
+                "-f",
+                "elf64",
+                "-o",
+                "${fileBasenameNoExtension}.o",
+                "${fileBasename}"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "close": true,
+                "clear": true
+            },
+            "dependsOn": [
+                "remove-build"
+            ]
         },
         {
-            "label": "execute",
-            "type": "shell",
-            "command": "./${fileBasenameNoExtension}.exe"
-            "dependsOn": ["link"]
+            "label": "LINK",
+            "command": "ld",
+            "args": [
+                "-o",
+                "${fileBasenameNoExtension}.exe",
+                "${fileBasenameNoExtension}.o"
+            ],
+            "dependsOn": [
+                "build-ASMwithCPP"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "error"
+                }
+            },
+            "presentation": {
+                "reveal": "silent",
+                "close": true,
+                "clear": true
+            }
         }
     ]
 }
