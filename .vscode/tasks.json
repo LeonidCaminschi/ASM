@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "remove",
+            "type": "shell",
+            "command": "rm -rf ${fileBasenameNoExtension}.o ${fileBasenameNoExtension}"
+        },
+        {
+            "label": "nasm",
+            "type": "shell",
+            "command": "nasm -f elf64 -o ${fileBasenameNoExtension}.o ${fileBasename}"
+            "dependsOn": ["remove"]
+        }, 
+        {
+            "label": "link",
+            "type": "shell",
+            "command": "ld ${fileBasenameNoExtension}.o -o ${fileBasenameNoExtension}.exe"
+            "dependsOn": ["nasm"]
+        },
+        {
+            "label": "execute",
+            "type": "shell",
+            "command": "./${fileBasenameNoExtension}.exe"
+            "dependsOn": ["link"]
+        }
+    ]
+}
