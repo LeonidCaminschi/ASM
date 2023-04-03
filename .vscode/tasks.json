@@ -2,37 +2,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "remove-build",
-            "command": "rm",
-            "args": [
-                "-rf",
-                "${fileBasenameNoExtension}.o",
-                "${fileBasenameNoExtension}.exe"
-            ],
-            "presentation": {
-                "reveal": "silent",
-                "close": true,
-                "clear": true
-            }
-        },
-        {
             "label": "build-ASMwithCPP",
             "command": "nasm",
             "args": [
                 "-f",
                 "elf64",
+                "-g",
                 "-o",
                 "${fileBasenameNoExtension}.o",
                 "${fileBasename}"
             ],
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": ".*error.*"
+                }
+            },
             "presentation": {
                 "reveal": "silent",
-                "close": true,
                 "clear": true
-            },
-            "dependsOn": [
-                "remove-build"
-            ]
+            }
         },
         {
             "label": "LINK",
