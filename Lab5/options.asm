@@ -29,7 +29,7 @@ section .bss
     ; choice
     choice resb 1
     ; proc 2
-    age resb 2
+    age resb 3
 
 section .text
     global _start
@@ -56,7 +56,8 @@ _start:
     repe cmpsb
     je _age
 
-    jmp _exit
+    jmp _start
+    ;jmp _exit
 
 _printOptions:
     mov rax, 1
@@ -130,7 +131,8 @@ _age:
     call _getAge
     call _printFirstPart
     call _printAge
-    jmp _printSecondPart
+    call _printSecondPart
+    jmp _start
 
 _printQuestion:
     mov rax, 1
@@ -170,7 +172,7 @@ _printSecondPart:
     mov rsi, output1
     mov rdx, 11    
     syscall
-    jmp _start
+    ret
 
 ; exit
 _exit:

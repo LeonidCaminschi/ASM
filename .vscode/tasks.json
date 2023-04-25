@@ -10,7 +10,7 @@
                 "-g",
                 "-o",
                 "${fileBasenameNoExtension}.o",
-                "${fileBasename}"
+                "${relativeFileDirname}"
             ],
             "problemMatcher": {
                 "pattern": {
