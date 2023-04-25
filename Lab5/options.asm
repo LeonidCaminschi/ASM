@@ -36,6 +36,9 @@ section .text
 
 _start:
     call _printOptions
+    jmp _contstart
+
+_contstart:
     call _getChoice
 
     mov esi, choice
@@ -56,8 +59,8 @@ _start:
     repe cmpsb
     je _age
 
-    jmp _start
-    ;jmp _exit
+    jmp _contstart
+    ; jmp _exit
 
 _printOptions:
     mov rax, 1
