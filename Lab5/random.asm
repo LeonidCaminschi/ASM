@@ -3,18 +3,16 @@ section .data
     newline db 10,0
 
 section .bss
-    rand_num resb 1
+    rand_num resb 2
 
 section .text
     global _start
 
 _start:
-    ; Set up the seed for random number generator
     xor eax, eax
     rdtsc
     mov ecx, eax
 
-    ; Generate random number
     mov eax, ecx
     mul ecx
     add eax, ecx
@@ -23,11 +21,11 @@ _start:
     div ebx
     inc eax
 
-    ; Convert random number to ASCII and store in memory
+    shl al, 2
+    shr al, 2
     add al, '0'
     mov [rand_num], al
 
-    ; Output message and random number to screen
     mov rax, 1
     mov rdi, 1
     mov rsi, msg
@@ -46,7 +44,8 @@ _start:
     mov rdx, 1
     syscall
 
-    ; Exit program
+    jmp _start
+
     mov eax, 60
     xor edi, edi
     syscall
